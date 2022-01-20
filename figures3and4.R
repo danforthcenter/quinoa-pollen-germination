@@ -1,6 +1,5 @@
 library(ggplot2)
 library(reshape2)
-library(readr)
 library(plyr)
 
 setwd("~/quinoa_heat/USDAFellowship/pollen/pollen_germination_paper/data/")
@@ -241,8 +240,6 @@ figue3c<-ggplot(ph.means,aes(x=treatment,y=pollen_germination)) +
         plot.title = element_text(size = "18", face = "bold"),
         legend.position =  "none") +
   scale_y_continuous(limits = c(0,100),breaks = seq(0, 100, by = 20)) +
-  #scale_x_discrete(labels=c("control" = "Control (22°C)", "heat" = "Heat (35°C)")) +
-  #scale_fill_manual(values=c("steelblue", "indianred2")) +
   facet_wrap(~ genotype)
 
 figue3c 
