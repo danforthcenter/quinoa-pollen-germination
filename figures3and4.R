@@ -58,11 +58,11 @@ PVAL5
 
 
 #######################
-###### Figure 3b ######
+###### Figure 3 ######
 #######################
 
 #Read file with data
-timecourse = read.table(file="figure3b.csv",sep=",",header=TRUE)
+timecourse = read.table(file="figure3.csv",sep=",",header=TRUE)
 
 #Subset columns with relevant data
 timecourse<- timecourse[,c("sample","hours_incubation", "percent_germinated")]
@@ -73,7 +73,7 @@ timecourse.means <- aggregate(data = timecourse, percent_germinated ~
                                 sample+hours_incubation, FUN = function(i)mean(i))
 
 #Graph
-figure3b<-ggplot(timecourse.means,aes(x=hours_incubation,y=percent_germinated)) +
+figure3<-ggplot(timecourse.means,aes(x=hours_incubation,y=percent_germinated)) +
   geom_boxplot(aes(fill=hours_incubation)) + 
   geom_point(color="black", pch=21, size = 2, position=position_dodge(width = 0.65)) + 
   theme_bw(base_size = 14) + 
@@ -86,8 +86,8 @@ figure3b<-ggplot(timecourse.means,aes(x=hours_incubation,y=percent_germinated)) 
         legend.position = "none")+
   scale_y_continuous(limits = c(0,100), breaks = seq(0, 100, by = 20)) 
 
-figure3b
-ggsave("figure3b.pdf",plot = figure3b,width=7,height = 7,dpi=300)
+figure3
+ggsave("figure3.pdf",plot = figure3,width=7,height = 7,dpi=300)
 
 #Summary statistics
 timecourse.means.sub <- timecourse.means[,c("hours_incubation", "percent_germinated")]
@@ -97,24 +97,24 @@ ddply(timecourse.means.sub_melted, c("hours_incubation","variable"), summarise,
       sem = sd(value)/sqrt(length(value)))
 
 #Pairwise comparisons with Welch's t-test
-f3b <- factor(timecourse.means$hours_incubation)
+f3 <- factor(timecourse.means$hours_incubation)
 p.adjust.method <- "none"
 vals <- timecourse.means$percent_germinated
 compare.levels.p.values <- function(i, j) {
-  xi <- vals[as.integer(f3b) == i]
-  xj <- vals[as.integer(f3b) == j]
+  xi <- vals[as.integer(f3) == i]
+  xj <- vals[as.integer(f3) == j]
   t.test(xi, xj,)$p.value
 }
-PVAL3b <- pairwise.table(compare.levels.p.values, levels(f3b), p.adjust.method)
-PVAL3b
+PVAL3 <- pairwise.table(compare.levels.p.values, levels(f3), p.adjust.method)
+PVAL3
 
 
 #######################
-###### Figure 4a ######
+###### Figure 2a ######
 #######################
 
 #Read file with data
-germination = read.table(file="figure4a.csv",sep=",",header=TRUE)
+germination = read.table(file="figure2a.csv",sep=",",header=TRUE)
 
 #Subset columns with relevant data to graph
 germinationa<- germination[,c("sample", "treatment", "germination_percent")]
@@ -125,7 +125,7 @@ germination.means <- aggregate(data = germinationa, germination_percent ~
                               sample+treatment, FUN = function(i)mean(i))
 
 
-figue4a <- ggplot(germination.means,aes(x=treatment,y=germination_percent,group=treatment)) +
+figure2a <- ggplot(germination.means,aes(x=treatment,y=germination_percent,group=treatment)) +
   geom_boxplot(aes(fill=treatment)) + 
   geom_point(color="black", pch=21, size = 2, position=position_dodge(width = 0.65)) + 
   theme_bw(base_size = 14) + 
@@ -138,8 +138,8 @@ figue4a <- ggplot(germination.means,aes(x=treatment,y=germination_percent,group=
         legend.position = "none")+
   scale_y_continuous(limits = c(0, 80), breaks = seq(0, 80, by = 20)) 
 
-figue4a
-ggsave("figure4a.pdf",plot = figue4a,width=7,height = 7,dpi=300)
+figure2a
+ggsave("figure2a.pdf",plot = figure2a,width=7,height = 7,dpi=300)
 
 #Summary statistics
 sucrose.means.sub <- germination.means[,c("treatment", "germination_percent")]
@@ -149,24 +149,24 @@ ddply(sucrose.means.sub_melted, c("treatment","variable"), summarise,
       sem = sd(value)/sqrt(length(value)))
 
 #Pairwise comparisons with Welch's t-test
-f4a <- factor(germination.means$treatment)
+f2a <- factor(germination.means$treatment)
 p.adjust.method <- "none"
 vals <- germination.means$germination_percent
 compare.levels.p.values <- function(i, j) {
-  xi <- vals[as.integer(f4a) == i]
-  xj <- vals[as.integer(f4a) == j]
+  xi <- vals[as.integer(f2a) == i]
+  xj <- vals[as.integer(f2a) == j]
   t.test(xi, xj,)$p.value
 }
-PVAL4a <- pairwise.table(compare.levels.p.values, levels(f4a), p.adjust.method)
-PVAL4a
+PVAL2a <- pairwise.table(compare.levels.p.values, levels(f2a), p.adjust.method)
+PVAL2a
 
 
 #######################
-###### Figure 4b ######
+###### Figure 2b ######
 #######################
 
 #Read file with data
-boric.acid = read.table(file="figure4b.csv",sep=",",header=TRUE)
+boric.acid = read.table(file="figure2b.csv",sep=",",header=TRUE)
 
 #Subset columns with relevant data to graph
 boric.acid<- boric.acid[,c("sample", "treatment", "germination_percent")]
@@ -177,7 +177,7 @@ boric.acid.means <- aggregate(data = boric.acid, germination_percent ~
                                  sample+treatment, FUN = function(i)mean(i))
 
 
-figue4b <- ggplot(boric.acid.means,aes(x=treatment,y=germination_percent,group=treatment)) +
+figure2b <- ggplot(boric.acid.means,aes(x=treatment,y=germination_percent,group=treatment)) +
   geom_boxplot(aes(fill=treatment)) + 
   geom_point(color="black", pch=21, size = 2, position=position_dodge(width = 0.65)) + 
   theme_bw(base_size = 14) + 
@@ -190,8 +190,8 @@ figue4b <- ggplot(boric.acid.means,aes(x=treatment,y=germination_percent,group=t
         legend.position = "none")+
   scale_y_continuous(limits = c(0, 80), breaks = seq(0, 80, by = 20)) 
 
-figue4b
-ggsave("figure4b.pdf",plot = figue4b,width=7,height = 7,dpi=300)
+figure2b
+ggsave("figure2b.pdf",plot = figure2b,width=7,height = 7,dpi=300)
 
 #Summary statistics
 boric.acid.means.sub <- boric.acid.means[,c("treatment", "germination_percent")]
@@ -201,24 +201,24 @@ ddply(boric.acid.means.sub_melted, c("treatment","variable"), summarise,
       sem = sd(value)/sqrt(length(value)))
 
 #Pairwise comparisons with Welch's t-test
-f4b <- factor(boric.acid.means$treatment)
+f2b <- factor(boric.acid.means$treatment)
 p.adjust.method <- "none"
 vals <- boric.acid.means$germination_percent
 compare.levels.p.values <- function(i, j) {
-  xi <- vals[as.integer(f4b) == i]
-  xj <- vals[as.integer(f4b) == j]
+  xi <- vals[as.integer(f2b) == i]
+  xj <- vals[as.integer(f2b) == j]
   t.test(xi, xj,)$p.value
 }
-PVAL4b <- pairwise.table(compare.levels.p.values, levels(f4b), p.adjust.method)
-PVAL4b
+PVAL2b <- pairwise.table(compare.levels.p.values, levels(f2b), p.adjust.method)
+PVAL2b
 
 
 #######################
-###### Figure 4c ######
+###### Figure 2c ######
 #######################
 
 #Read file with data
-ph = read.table(file="figure4c.csv",sep=",",header=TRUE)
+ph = read.table(file="figure2c.csv",sep=",",header=TRUE)
 
 #Subset columns with relevant data to graph
 pha<- ph[,c("sample","genotype", "treatment", "pollen_germination")]
@@ -229,7 +229,7 @@ pha$genotype <- factor(pha$genotype, levels = c("QQ74","Cherry vanilla"))
 ph.means <- aggregate(data = pha, pollen_germination ~ 
                                  sample+treatment+genotype, FUN = function(i)mean(i))
 
-figue4c<-ggplot(ph.means,aes(x=treatment,y=pollen_germination)) +
+figure2c<-ggplot(ph.means,aes(x=treatment,y=pollen_germination)) +
   geom_boxplot(aes(fill=treatment)) + 
   geom_point(aes(fill=treatment), color="black", pch=21, size = 2, position=position_dodge(width = 0.65)) + 
   theme_bw(base_size = 14) + 
@@ -242,8 +242,8 @@ figue4c<-ggplot(ph.means,aes(x=treatment,y=pollen_germination)) +
   scale_y_continuous(limits = c(0,100),breaks = seq(0, 100, by = 20)) +
   facet_wrap(~ genotype)
 
-figue4c
-ggsave("figure4c.pdf",plot = figue4c,width=7,height = 7,dpi=300)
+figure2c
+ggsave("figure2c.pdf",plot = figure2c,width=7,height = 7,dpi=300)
 
 #Summary statistics
 ph.means.sub <- ph.means[,c("genotype", "treatment", "pollen_germination")]
