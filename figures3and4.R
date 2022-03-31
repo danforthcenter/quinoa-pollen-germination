@@ -6,11 +6,11 @@ setwd("~/quinoa_heat/USDAFellowship/pollen/pollen_germination_paper/data/")
 
 
 #######################
-###### Figure 3a ######
+###### Figure 5 ######
 #######################
 
 #Read file with data
-days_afa = read.table(file="figure3a.csv",sep=",",header=TRUE)
+days_afa = read.table(file="figure5.csv",sep=",",header=TRUE)
 
 #Subset columns with relevant data
 days_afa<- days_afa[,c("sample","days_after_first_anthesis", "pollen_germination")]
@@ -21,7 +21,7 @@ days_afa.means <- aggregate(data = days_afa, pollen_germination ~
                               sample+days_after_first_anthesis, FUN = function(i)mean(i))
 
 #Graph
-figure3a<-ggplot(days_afa.means,aes(x=days_after_first_anthesis,y=pollen_germination)) +
+figure5<-ggplot(days_afa.means,aes(x=days_after_first_anthesis,y=pollen_germination)) +
   geom_boxplot(aes(fill=days_after_first_anthesis)) + 
   geom_point(color="black", pch=21, size = 2, position=position_dodge(width = 0.65)) + 
   theme_bw(base_size = 14) + 
@@ -34,8 +34,8 @@ figure3a<-ggplot(days_afa.means,aes(x=days_after_first_anthesis,y=pollen_germina
         legend.position = "none")+
   scale_y_continuous(limits = c(20,80), breaks = seq(20, 80, by = 20)) 
 
-figure3a
-ggsave("figure3a.pdf",plot = figure3a,width=7,height = 7,dpi=300)
+figure5
+ggsave("figure5.pdf",plot = figure5,width=7,height = 7,dpi=300)
 
 #Summary statistics
 days_afa.means.sub <- days_afa.means[,c("days_after_first_anthesis", "pollen_germination")]
@@ -45,16 +45,16 @@ ddply(days_afa.means.sub_melted, c("days_after_first_anthesis","variable"), summ
       sem = sd(value)/sqrt(length(value)))
 
 #Pairwise comparisons with Welch's t-test
-f3a <- factor(days_afa.means$days_after_first_anthesis)
+f5 <- factor(days_afa.means$days_after_first_anthesis)
 p.adjust.method <- "none"
 vals <- days_afa.means$pollen_germination
 compare.levels.p.values <- function(i, j) {
-  xi <- vals[as.integer(f3a) == i]
-  xj <- vals[as.integer(f3a) == j]
+  xi <- vals[as.integer(f5) == i]
+  xj <- vals[as.integer(f5) == j]
   t.test(xi, xj,)$p.value
 }
-PVAL3a <- pairwise.table(compare.levels.p.values, levels(f3a), p.adjust.method)
-PVAL3a
+PVAL5 <- pairwise.table(compare.levels.p.values, levels(f5), p.adjust.method)
+PVAL5
 
 
 #######################
