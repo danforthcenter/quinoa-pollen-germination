@@ -2,6 +2,7 @@ library(ggplot2)
 library(reshape2)
 library(plyr)
 
+#Optionally, define a directory where the data is located and the figures will be generated
 setwd()
 
 
