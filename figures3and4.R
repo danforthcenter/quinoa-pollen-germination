@@ -2,7 +2,7 @@ library(ggplot2)
 library(reshape2)
 library(plyr)
 
-setwd("~/quinoa_heat/USDAFellowship/pollen/pollen_germination_paper/data/")
+setwd()
 
 
 #######################
